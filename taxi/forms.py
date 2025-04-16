@@ -5,15 +5,19 @@ from django import forms
 from taxi.models import Driver, Car
 
 
-class AuthorCreationForm(UserCreationForm):
-
-    class Meta(UserCreationForm.Meta):
+class DriverCreationForm(UserCreationForm):
+    class Meta:
         model = Driver
-        fields = UserCreationForm.Meta.fields + ("license_number",)
+        fields = (
+            "username",
+            "first_name",
+            "last_name",
+            "license_number",
+        )
 
 
 class DriverLicenseUpdateForm(UserChangeForm):
-    class Meta(UserChangeForm):
+    class Meta:
         model = Driver
         fields = ("license_number",)
 
@@ -22,7 +26,6 @@ class CarForm(forms.ModelForm):
     drivers = forms.ModelMultipleChoiceField(
         queryset=get_user_model().objects.all(),
         widget=forms.CheckboxSelectMultiple,
-
     )
 
     class Meta:
